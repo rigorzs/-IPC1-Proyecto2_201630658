@@ -18,8 +18,8 @@ public class Proyecto2Agencia {
     public static void main(String[] args) {
         Login inicio=new Login();
         inicio.setVisible(true);
-        
-        
+        //Nreservacion j=new Nreservacion();
+        //j.setVisible(true);
     }
     
 }

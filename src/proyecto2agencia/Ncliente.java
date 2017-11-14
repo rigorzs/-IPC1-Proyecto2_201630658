@@ -161,8 +161,8 @@ public class Ncliente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Clientes clientes=new Clientes();
-        clientes.setVisible(true);
+        //Clientes clientes=new Clientes();
+        //clientes.setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_jButton2ActionPerformed
 

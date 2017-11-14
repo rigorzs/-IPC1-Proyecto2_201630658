@@ -5,6 +5,13 @@
  */
 package proyecto2agencia;
 
+import clases.*;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Juan RigobertoZuñiga
@@ -15,6 +22,7 @@ public class Login extends javax.swing.JFrame {
      * Creates new form Login
      */
     public static boolean admin=false;
+    public static int cont=0;
     public Login() {
         initComponents();
         jPasswordField1.setVisible(false);
@@ -36,6 +44,7 @@ public class Login extends javax.swing.JFrame {
         jPasswordField1 = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +79,13 @@ public class Login extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel1.setText("Ingrese Contrase;a");
 
+        jButton4.setText("Salir");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,18 +93,20 @@ public class Login extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton3))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jButton2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton1)))))
+                                .addComponent(jButton1))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(33, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -104,7 +122,9 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jPasswordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton3))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButton4)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -123,6 +143,7 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if(jPasswordField1.getText().equals(Proyecto2Agencia.contra)){
+            cont++;
             admin=true;
             Inicio init=new Inicio(admin);
             init.setVisible(true);
@@ -131,10 +152,22 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cont++;
         Inicio init=new Inicio(admin);
             init.setVisible(true);
             this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if (cont>1){
+            String cliente="‪C:\\Users\\Juan RigobertoZuñiga\\Desktop\\documentosdeprueba\\05 Clientes.csv";
+            String paquete="C:\\Users\\Juan RigobertoZuñiga\\Desktop\\documentosdeprueba\\08 Paquetes.csv";
+            eliminarFichero(cliente);
+            eliminarFichero(paquete);
+            guardardatos(); 
+        }
+        System.exit(0);
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -175,7 +208,91 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPasswordField jPasswordField1;
     // End of variables declaration//GEN-END:variables
+public void eliminarFichero(String archivo) {
+        try {
+            File fichero = new File(archivo);
+            if (fichero.delete()) {
+                JOptionPane.showMessageDialog(null, "eliminado con éxito");
+            } else {
+                JOptionPane.showMessageDialog(null, "no eliminado");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+public void guardarclientes(String vector[]){
+        //procedimiento para guardar en archivo txt
+         File Ffichero = new File("‪C:\\Users\\Juan RigobertoZuñiga\\Desktop\\documentosdeprueba\\05 Clientes.csv");
+        try {
+            FileWriter fw = new FileWriter(Ffichero, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            for (int i = 0; i <vector.length; i++) {
+            pw.println(vector[i]);
+            }
+            pw.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    }
+public void guardarpaquetes(String vector[]){
+        //procedimiento para guardar en archivo txt
+         File Ffichero = new File("‪C:\\Users\\Juan RigobertoZuñiga\\Desktop\\documentosdeprueba\\08 Paquetes.csv");
+        try {
+            FileWriter fw = new FileWriter(Ffichero, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(bw);
+            for (int i = 0; i <vector.length; i++) {
+            pw.println(vector[i]);
+            }
+            pw.close();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    
+    }
+    public void guardardatos(){
+        int i=0;
+        Nodo aux = modulocarga.clientela.inicio;//devuelve el nodo de la lista
+        cliente ref;
+        String vec[]=new String[modulocarga.clientela.getSize()];
+        while (aux!=null){
+            ref = (cliente) aux.dato;//devuelve un objeto de casteo
+            String loc =ref.codigo+","+ref.nombre+","+ref.apellido+","+ref.tarjeta+","+ref.fechan+","+ref.telefono+","+ref.celular+","+ref.direccionh+","+ref.frecuencia;
+            vec[i]=loc;
+            aux = aux.siguiente;//pasa al siguiente nodo
+            i++;
+            }
+        guardarclientes(vec);
+        //guarda datos de aerolineas y buses
+        i=0;
+        Nodo aux1 = modulocarga.aerobuses.inicio;//devuelve el nodo de la lista
+        aerolineaybus ref1;
+        String aero[]=new String[modulocarga.clientela.getSize()];
+        while (aux1!=null){
+            ref1 = (aerolineaybus) aux1.dato;//devuelve un objeto de casteo
+            String loc =ref1.codigo+","+ref1.horasal+","+ref1.horallega+","+ref1.capacidad+"-----"+ref1.destino;
+            aero[i]=loc;
+            aux1 = aux1.siguiente;//pasa al siguiente nodo
+            i++;
+            }
+        //guarda datos de paquetes
+        i=0;
+        Nodo aux2 = modulocarga.paquetes.inicio;//devuelve el nodo de la lista
+        paquete ref2;
+        String paque[]=new String[modulocarga.paquetes.getSize()];
+        while (aux2!=null){
+            ref2 = (paquete) aux2.dato;//devuelve un objeto de casteo
+            String loc =ref2.codigo+","+ref2.tipo+","+ref2.clasificacion+","+ref2.cantidad+","+ref2.transporte+","+ref2.hospedage+","+ref2.codcreucero+","+ref2.codrenta+","+ref2.codestino+","+ref2.codlugar+","+ref2.costo;
+            paque[i]=loc;
+            aux2 = aux2.siguiente;//pasa al siguiente nodo
+            i++;
+            }
+        guardarpaquetes(paque);
+    }
 }
